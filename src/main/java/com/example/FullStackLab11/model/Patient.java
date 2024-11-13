@@ -13,7 +13,7 @@ public class Patient {
     }
 
     public Patient(){
-
+        this.journal = new Journal();
     }
 
     public long getId() {
@@ -30,6 +30,14 @@ public class Patient {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Journal getJournal() {
+        return journal;
+    }
+
+    public void updateJournal(Journal journal) {
+        this.journal = journal;
     }
 
 }
