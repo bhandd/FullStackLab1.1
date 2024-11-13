@@ -1,5 +1,5 @@
 package com.example.FullStackLab11.model;
-public class Employee {
+public class Patient {
 
     private long id;
     private String name;

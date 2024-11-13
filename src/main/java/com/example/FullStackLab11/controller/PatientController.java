@@ -2,7 +2,7 @@ package com.example.FullStackLab11.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.FullStackLab11.model.Employee;
+import com.example.FullStackLab11.model.Patient;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,44 +11,44 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-public class EmployeeController {
+public class PatientController {
 
-    private List<Employee> employees = createList();
+    private List<Patient> patients = createList();
 
     /**När användaren kallar på /employees så returneras en lista med alla anställda.
      * */
-    @RequestMapping(value = "/employees", method = RequestMethod.GET,
+    @RequestMapping(value = "/patients", method = RequestMethod.GET,
             produces = "application/json")
-    public List<Employee> getEmployees() {
-        return employees;
+    public List<Patient> getPatients() {
+        return patients;
     }
 
     /**
      * Returnerar denna lista
      * */
-    private static List<Employee> createList() {
-        List<Employee> tempEmployees = new ArrayList<>();
+    private static List<Patient> createList() {
+        List<Patient> tempPatients = new ArrayList<>();
 
-        Employee emp1 = new Employee();
+        Patient emp1 = new Patient();
         emp1.setName("emp1");
         emp1.setId(1);
         emp1.setDepartment("HR");
 
-        Employee emp2 = new Employee();
+        Patient emp2 = new Patient();
         emp2.setName("emp2");
         emp2.setId(2);
         emp2.setDepartment("Finance");
 
-        Employee emp3 = new Employee();
+        Patient emp3 = new Patient();
         emp3.setName("emp3");
         emp3.setId(3);
         emp3.setDepartment("Finance");
 
-        tempEmployees.add(emp1);
-        tempEmployees.add(emp2);
-        tempEmployees.add(emp3);
+        tempPatients.add(emp1);
+        tempPatients.add(emp2);
+        tempPatients.add(emp3);
 
-        return tempEmployees;
+        return tempPatients;
     }
 
 }
