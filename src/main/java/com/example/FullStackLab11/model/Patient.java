@@ -3,7 +3,18 @@ public class Patient {
 
     private long id;
     private String name;
-    private String department;
+    private Journal journal;
+
+
+    public Patient(long id, String name, Journal journal) {
+        this.id = id;
+        this.name = name;
+        this.journal = journal;
+    }
+
+    public Patient(){
+
+    }
 
     public long getId() {
         return id;
@@ -21,11 +32,4 @@ public class Patient {
         this.name = name;
     }
 
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
 }

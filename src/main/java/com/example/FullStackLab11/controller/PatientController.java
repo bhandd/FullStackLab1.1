@@ -28,27 +28,28 @@ public class PatientController {
      * */
     private static List<Patient> createList() {
         List<Patient> tempPatients = new ArrayList<>();
-
-        Patient emp1 = new Patient();
-        emp1.setName("emp1");
-        emp1.setId(1);
-        emp1.setDepartment("HR");
-
-        Patient emp2 = new Patient();
-        emp2.setName("emp2");
-        emp2.setId(2);
-        emp2.setDepartment("Finance");
-
-        Patient emp3 = new Patient();
-        emp3.setName("emp3");
-        emp3.setId(3);
-        emp3.setDepartment("Finance");
-
-        tempPatients.add(emp1);
-        tempPatients.add(emp2);
-        tempPatients.add(emp3);
-
-        return tempPatients;
+//
+//     //   Patient emp1 = new Patient();
+//        emp1.setName("emp1");
+//        emp1.setId(1);
+//
+//
+//        Patient emp2 = new Patient();
+//        emp2.setName("emp2");
+//        emp2.setId(2);
+//
+//
+//        Patient emp3 = new Patient();
+//        emp3.setName("emp3");
+//        emp3.setId(3);
+//
+//
+//        tempPatients.add(emp1);
+//        tempPatients.add(emp2);
+//        tempPatients.add(emp3);
+//
+//        return tempPatients;
+        return null;
     }
 
 }
