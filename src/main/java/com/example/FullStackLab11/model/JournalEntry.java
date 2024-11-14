@@ -1,15 +1,21 @@
 package com.example.FullStackLab11.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.util.Date;
 
+@Entity
 public class JournalEntry {
 
+    @Id
     private int id;
     private int patientId;
     private String entry;
     private Date startDate;
     private Date endDate;
     private Condition condition;
+
     private Doctor doctor;
 
     public JournalEntry(int id, int patientId, int personnelId, String entry, Date startDate, Date endDate, Condition condition, Doctor doctor) {
@@ -95,4 +101,6 @@ public class JournalEntry {
                 ", endDate=" + endDate +
                 '}';
     }
+
+
 }

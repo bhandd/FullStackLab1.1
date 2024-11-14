@@ -1,12 +1,20 @@
 package com.example.FullStackLab11.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Patient {
 
+    @Id
     private long id;
     private String name;
+
     private Journal journal;
 
 
     public Patient(long id, String name, Journal journal) {
+
         this.id = id;
         this.name = name;
         this.journal = journal;
@@ -14,11 +22,10 @@ public class Patient {
 
     public Patient(){
         this.journal = new Journal();
+
     }
 
-    public long getId() {
-        return id;
-    }
+
 
     public void setId(long id) {
         this.id = id;
@@ -33,11 +40,20 @@ public class Patient {
     }
 
     public Journal getJournal() {
-        return journal;
+     //   return journal;
+        return null;
     }
 
     public void updateJournal(Journal journal) {
         this.journal = journal;
+
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

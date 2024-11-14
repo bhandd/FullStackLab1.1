@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
+//@RequestMapping("/patients")
 public class PatientController {
 
     private List<Patient> patients = createList();
@@ -23,6 +24,8 @@ public class PatientController {
         return patients;
     }
 
+    /** Get a patient based on id
+     *  **/
     @RequestMapping(value = "/patients/{id}", method = RequestMethod.GET,
             produces = "application/json")
     public Patient getPatientById(@PathVariable("id") long id) {
@@ -32,7 +35,8 @@ public class PatientController {
                 .orElse(null);  // or handle not found case differently
     }
 
-
+/** Delete a patient
+ * */
     @RequestMapping (value = "/patients/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<String> removePatientById(@PathVariable("id") Long id) {
         boolean removed = patients.removeIf(patient -> patient.getId() == id);
@@ -45,6 +49,8 @@ public class PatientController {
     }
 
 
+    /** Post a new patient
+     * */
 
     @RequestMapping(value = "/patients",method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<Patient> createPatient(@RequestBody Patient newPatient) {
@@ -59,8 +65,12 @@ public class PatientController {
     }
 
     //TODO: testa denna i webbläsaren me en js request
+    /**
+     * Update an existing patient
+     * */
     @PutMapping("/{id}")
     public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody Patient updatedPatient) {
+        System.out.println("updatePatient initiated");
         for (Patient patient : patients) {
             if (patient.getId()==id) { // Använd equals för att jämföra Long-objekt
                 patient.setName(updatedPatient.getName());

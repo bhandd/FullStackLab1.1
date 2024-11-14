@@ -1,7 +1,13 @@
 package com.example.FullStackLab11.model;
 
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class User {
 
+    @Id
     private int id;
     private String name;
 
@@ -30,4 +36,5 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
+
 }
