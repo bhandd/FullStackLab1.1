@@ -1,7 +1,6 @@
 package com.example.FullStackLab11.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
@@ -9,34 +8,34 @@ import java.util.Date;
 public class JournalEntry {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private int patientId;
     private String entry;
     private Date startDate;
     private Date endDate;
     private Condition condition;
+    @OneToOne
+    private Journal journal;
 
-    private Doctor doctor;
-
-    public JournalEntry(int id, int patientId, int personnelId, String entry, Date startDate, Date endDate, Condition condition, Doctor doctor) {
+    public JournalEntry(int id, int patientId, int personnelId, String entry, Date startDate, Date endDate, Condition condition) {
         this.id = id;
         this.patientId = patientId;
         this.entry = entry;
         this.startDate = startDate ;
         this.endDate = endDate;
         this.condition = condition;
-        this.doctor = doctor;
 
     }
 
     public JournalEntry() {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public int getPatientId() {
+    public long getPatientId() {
         return patientId;
     }
 
@@ -81,14 +80,6 @@ public class JournalEntry {
 
     public void setCondition(Condition condition) {
         this.condition = condition;
-    }
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
     }
 
     @Override

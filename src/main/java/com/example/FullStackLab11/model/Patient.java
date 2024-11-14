@@ -2,11 +2,10 @@ package com.example.FullStackLab11.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
-@Entity
 public class Patient {
 
-    @Id
     private long id;
     private String name;
 

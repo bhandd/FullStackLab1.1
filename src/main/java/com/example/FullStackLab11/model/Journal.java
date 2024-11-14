@@ -1,7 +1,6 @@
 package com.example.FullStackLab11.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +8,14 @@ import java.util.List;
 @Entity
 public class Journal {
 
-    private int patientId;
+    private long patientId;
 
+    @OneToMany
     private List<JournalEntry> entries;
+
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
 
     public Journal(int patientId) {
@@ -24,11 +26,11 @@ public class Journal {
     public Journal() {
     }
 
-    public int getPatientId() {
+    public long getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(int patientId) {
+    public void setPatientId(long patientId) {
         this.patientId = patientId;
     }
 
@@ -41,7 +43,7 @@ public class Journal {
         entries.add(entry);
     }
 
-    public JournalEntry getEntry(int id) {
+    public JournalEntry getEntry(long id) {
         for (JournalEntry entry : entries) {
             if (entry.getId() == id) {
                 return entry;

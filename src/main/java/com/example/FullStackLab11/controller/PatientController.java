@@ -2,8 +2,10 @@ package com.example.FullStackLab11.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.qos.logback.core.joran.spi.HttpUtil;
+import com.example.FullStackLab11.Services.UserService;
 import com.example.FullStackLab11.model.Patient;
+import com.example.FullStackLab11.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +18,13 @@ public class PatientController {
 
     private List<Patient> patients = createList();
 
-    /**När användaren kallar på /employees så returneras en lista med alla anställda.
-     * */
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "/patients", method = RequestMethod.GET,
             produces = "application/json")
-    public List<Patient> getPatients() {
-        return patients;
+    public List<User> getAllUser() {
+        return userService.getAllUsers();
     }
 
     /** Get a patient based on id
@@ -48,20 +51,15 @@ public class PatientController {
         }
     }
 
-
-    /** Post a new patient
-     * */
-
     @RequestMapping(value = "/patients",method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Patient> createPatient(@RequestBody Patient newPatient) {
+    public ResponseEntity<User> createPatient(@RequestBody User newUser) {
         // Assign a new ID to the patient if necessary
-        newPatient.setId(1); // Assuming you have a method to generate unique IDs
 
         // Add the new patient to the list (or database if using a DB)
-        patients.add(newPatient);
+        userService.saveUser(newUser);
 
         // Return a 201 Created response with the new patient object
-        return ResponseEntity.status(HttpStatus.CREATED).body(newPatient);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
     //TODO: testa denna i webbläsaren me en js request

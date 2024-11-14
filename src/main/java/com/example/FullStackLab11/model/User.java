@@ -1,20 +1,24 @@
 package com.example.FullStackLab11.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class User {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String name;
+    private long social_number;
+    private String role;
 
 
-    public User(int id, String name) {
+    public User(long id, String name, long social_number, String role) {
         this.id = id;
         this.name = name;
+        this.social_number = social_number;
+        this.role = role;
     }
 
     public User(){
@@ -29,12 +33,27 @@ public class User {
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
+    public long getSocial_number() {
+        return social_number;
+    }
+
+    public void setSocial_number(long social_number) {
+        this.social_number = social_number;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }
