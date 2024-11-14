@@ -21,36 +21,50 @@ public class PatientController {
     @Autowired
     private UserService userService;
 
+    // GET patients
     @RequestMapping(value = "/patients", method = RequestMethod.GET,
             produces = "application/json")
-    public List<User> getAllUser() {
-        return userService.getAllUsers();
+    public List<User> getAllPatients() {
+        return userService.getAllPatients();
     }
 
-    /** Get a patient based on id
-     *  **/
+    // GET all who are not patients
+    @RequestMapping(value = "/staff", method = RequestMethod.GET,
+            produces = "application/json")
+    public List<User> getAllStaff() {
+        return userService.getAllStaff();
+    }
+
+    // GET
     @RequestMapping(value = "/patients/{id}", method = RequestMethod.GET,
             produces = "application/json")
     public Patient getPatientById(@PathVariable("id") long id) {
         return patients.stream()
                 .filter(patient -> patient.getId() == id)
                 .findFirst()
-                .orElse(null);  // or handle not found case differently
+                .orElse(null);
     }
 
-/** Delete a patient
- * */
+    // DELETE
     @RequestMapping (value = "/patients/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<String> removePatientById(@PathVariable("id") Long id) {
-        boolean removed = patients.removeIf(patient -> patient.getId() == id);
+        /*boolean removed = patients.removeIf(patient -> patient.getId() == id);
 
         if (removed) {
             return ResponseEntity.ok("Patient removed successfully");
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found");
+        }*/
+
+        if (!userService.existsById(id)) {
+            return ResponseEntity.notFound().build();
         }
+
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
+    // POST
     @RequestMapping(value = "/patients",method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> createPatient(@RequestBody User newUser) {
         // Assign a new ID to the patient if necessary

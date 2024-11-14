@@ -24,8 +24,21 @@ public class UserService {
         return (List<User>) userRepository.findAll();
     }
 
+    public List<User> getAllPatients() {
+        return userRepository.findByRole("patient");
+    }
+
+    public List<User> getAllStaff() {
+        return userRepository.findByRoleNot("patient");
+    }
+
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
+    }
+
+    public boolean existsById(Long id) {
+        Optional<User> u = userRepository.findById(id);
+        return u.isPresent();
     }
 
     // Update
