@@ -10,10 +10,15 @@ public class JournalEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "patient_id", nullable = false)
     private int patientId;
+    @Column(name = "entry", nullable = false)
     private String entry;
+    @Column(name = "start_date")
     private Date startDate;
+    @Column(name = "end_date")
     private Date endDate;
+    @Column(name = "condition")
     private Condition condition;
     @OneToOne
     private Journal journal;

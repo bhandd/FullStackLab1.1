@@ -1,8 +1,11 @@
 package com.example.FullStackLab11.controller;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.example.FullStackLab11.Services.EntryService;
 import com.example.FullStackLab11.Services.UserService;
+import com.example.FullStackLab11.model.JournalEntry;
 import com.example.FullStackLab11.model.Patient;
 import com.example.FullStackLab11.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +20,12 @@ import org.springframework.web.bind.annotation.*;
 public class PatientController {
 
     private List<User> users = new ArrayList<User>();
+    private List<JournalEntry> entries = new ArrayList<JournalEntry>();
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private EntryService entryService;
 
     // GET patients
     @RequestMapping(value = "/patients", method = RequestMethod.GET,
@@ -35,7 +41,7 @@ public class PatientController {
         return userService.getAllStaff();
     }
 
-    // GET
+    // GET a patient
     @RequestMapping(value = "/patients/{id}", method = RequestMethod.GET,
             produces = "application/json")
     public User getPatientById(@PathVariable("id") long id) {
@@ -44,7 +50,7 @@ public class PatientController {
                 .findFirst()
                 .orElse(null);
     }
-    // GET
+    // GET a non patient
     @RequestMapping(value = "/staff/{id}", method = RequestMethod.GET,
             produces = "application/json")
     public User getStaffById(@PathVariable("id") long id) {
@@ -53,22 +59,22 @@ public class PatientController {
                 .findFirst()
                 .orElse(null);
     }
+    // GET an entry
+    @RequestMapping(value = "/entry/{id}", method = RequestMethod.GET,
+            produces = "application/json")
+    public List<JournalEntry> getAllEntries(@PathVariable("id") long id) {
+        entries = entryService.getAllEntries();
+        return entries.stream()
+                .filter(entry -> entry.getPatientId() == id)
+                .collect(Collectors.toList());
+    }
 
     // DELETE
     @RequestMapping (value = "/patients/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public ResponseEntity<String> removePatientById(@PathVariable("id") long id) {
-        /*boolean removed = patients.removeIf(patient -> patient.getId() == id);
-
-        if (removed) {
-            return ResponseEntity.ok("Patient removed successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Patient not found");
-        }*/
-
         if (!userService.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
-
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
@@ -76,13 +82,14 @@ public class PatientController {
     // POST
     @RequestMapping(value = "/patients", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> createPatient(@RequestBody User newUser) {
-        // Assign a new ID to the patient if necessary
-
-        // Add the new patient to the list (or database if using a DB)
         userService.saveUser(newUser);
-
-        // Return a 201 Created response with the new patient object
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+    }
+    // POST
+    @RequestMapping(value = "/entry", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public ResponseEntity<JournalEntry> createPatient(@RequestBody JournalEntry newEntry) {
+        entryService.saveEntry(newEntry);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newEntry);
     }
 
     //TODO: testa denna i webbläsaren me en js request
