@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 //@RequestMapping("/patients")
 public class PatientController {
 
-    private List<Patient> patients = createList();
+    private List<User> users = new ArrayList<User>();
 
     @Autowired
     private UserService userService;
@@ -38,16 +38,25 @@ public class PatientController {
     // GET
     @RequestMapping(value = "/patients/{id}", method = RequestMethod.GET,
             produces = "application/json")
-    public Patient getPatientById(@PathVariable("id") long id) {
-        return patients.stream()
-                .filter(patient -> patient.getId() == id)
+    public User getPatientById(@PathVariable("id") long id) {
+        return users.stream()
+                .filter(user -> user.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+    // GET
+    @RequestMapping(value = "/staff/{id}", method = RequestMethod.GET,
+            produces = "application/json")
+    public User getStaffById(@PathVariable("id") long id) {
+        return users.stream()
+                .filter(user -> user.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
     // DELETE
     @RequestMapping (value = "/patients/{id}", method = RequestMethod.DELETE, produces = "application/json")
-    public ResponseEntity<String> removePatientById(@PathVariable("id") Long id) {
+    public ResponseEntity<String> removePatientById(@PathVariable("id") long id) {
         /*boolean removed = patients.removeIf(patient -> patient.getId() == id);
 
         if (removed) {
@@ -65,7 +74,7 @@ public class PatientController {
     }
 
     // POST
-    @RequestMapping(value = "/patients",method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    @RequestMapping(value = "/patients", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> createPatient(@RequestBody User newUser) {
         // Assign a new ID to the patient if necessary
 
@@ -80,18 +89,17 @@ public class PatientController {
     /**
      * Update an existing patient
      * */
-    @PutMapping("/{id}")
-    public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody Patient updatedPatient) {
+    @RequestMapping(value = "/patients/{id}", method = RequestMethod.PUT, consumes = "application/json")
+    public ResponseEntity<User> updatePatient(@PathVariable long id, @RequestBody User updatedPatient) {
         System.out.println("updatePatient initiated");
-        for (Patient patient : patients) {
-            if (patient.getId()==id) { // Använd equals för att jämföra Long-objekt
-                patient.setName(updatedPatient.getName());
-                patient.updateJournal(updatedPatient.getJournal());
-                // Uppdatera andra fält som behövs
-                return ResponseEntity.ok(patient); // Returnera den uppdaterade patienten
-            }
+        User updatedUser = userService.updateUser(id, updatedPatient);
+
+        // Check if update was successful
+        if (updatedUser != null) {
+            return ResponseEntity.ok(updatedUser); // Return the updated user
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 if user not found
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Returnera 404 om patienten inte hittas
     }
 
 
