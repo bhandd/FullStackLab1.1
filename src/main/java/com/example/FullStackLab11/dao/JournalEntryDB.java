@@ -1,7 +1,6 @@
 package com.example.FullStackLab11.dao;
 
-import com.example.FullStackLab11.model.Condition;
-import com.example.FullStackLab11.model.Journal;
+import com.example.FullStackLab11.model.HealthStatus;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -20,16 +19,16 @@ public class JournalEntryDB {
     private Date startDate;
     @Column(name = "end_date")
     private Date endDate;
-    @Column(name = "condition")
-    private Condition condition;
+    @Column(name = "healthStatus")
+    private HealthStatus healthStatus;
 
-    public JournalEntryDB(long id, long patientId, String entry, Date startDate, Date endDate, Condition condition) {
+    public JournalEntryDB(long id, long patientId, String entry, Date startDate, Date endDate, HealthStatus healthStatus) {
         this.id = id;
         this.patientId = patientId;
         this.entry = entry;
         this.startDate = startDate ;
         this.endDate = endDate;
-        this.condition = condition;
+        this.healthStatus = healthStatus;
 
     }
 
@@ -76,11 +75,11 @@ public class JournalEntryDB {
         this.endDate = endDate;
     }
 
-    public Condition getCondition() {
-        return condition;
+    public HealthStatus gethealthStatus() {
+        return healthStatus;
     }
 
-    public void setCondition(Condition condition) {
-        this.condition = condition;
+    public void sethealthStatus(HealthStatus healthStatus) {
+        this.healthStatus = healthStatus;
     }
 }
