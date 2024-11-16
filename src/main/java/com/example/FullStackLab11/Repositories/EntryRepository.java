@@ -1,10 +1,12 @@
 package com.example.FullStackLab11.Repositories;
 
-import com.example.FullStackLab11.model.JournalEntry;
+import com.example.FullStackLab11.dao.JournalEntryDB;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface EntryRepository extends CrudRepository<JournalEntry, Long> {
-    List<JournalEntry> getAllEntries();
+@Repository
+public interface EntryRepository extends CrudRepository<JournalEntryDB, Long> {
+
 }

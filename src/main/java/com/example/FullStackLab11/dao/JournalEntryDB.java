@@ -1,20 +1,29 @@
-package com.example.FullStackLab11.model;
+package com.example.FullStackLab11.dao;
 
+import com.example.FullStackLab11.model.Condition;
+import com.example.FullStackLab11.model.Journal;
 import jakarta.persistence.*;
 
 import java.util.Date;
 
-public class JournalEntry {
-
+@Entity
+@Table(name = "journal_entries")
+public class JournalEntryDB {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "patient_id", nullable = false)
     private long patientId;
+    @Column(name = "entry", nullable = false)
     private String entry;
+    @Column(name = "start_date")
     private Date startDate;
+    @Column(name = "end_date")
     private Date endDate;
+    @Column(name = "condition")
     private Condition condition;
-    private Journal journal;
 
-    public JournalEntry(long id, long patientId, String entry, Date startDate, Date endDate, Condition condition) {
+    public JournalEntryDB(long id, long patientId, String entry, Date startDate, Date endDate, Condition condition) {
         this.id = id;
         this.patientId = patientId;
         this.entry = entry;
@@ -24,7 +33,7 @@ public class JournalEntry {
 
     }
 
-    public JournalEntry() {
+    public JournalEntryDB() {
     }
 
     public long getId() {
@@ -73,16 +82,5 @@ public class JournalEntry {
 
     public void setCondition(Condition condition) {
         this.condition = condition;
-    }
-
-    @Override
-    public String toString() {
-        return "JournalEntry{" +
-                "id=" + id +
-                ", patientId=" + patientId +
-                ", entry='" + entry + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                '}';
     }
 }

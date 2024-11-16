@@ -1,21 +1,27 @@
-package com.example.FullStackLab11.model;
+package com.example.FullStackLab11.dao;
 
-public class User {
+import jakarta.persistence.*;
 
+@Entity
+public class UserDB {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "social_number")
     private long social_number;
+    @Column(name = "role")
     private String role;
 
-
-    public User(long id, String name, long social_number, String role) {
+    public UserDB(long id, String name, long social_number, String role) {
         this.id = id;
         this.name = name;
         this.social_number = social_number;
         this.role = role;
     }
 
-    public User(){
+    public UserDB(){
 
     }
 

@@ -1,11 +1,13 @@
 package com.example.FullStackLab11.Repositories;
 
-import com.example.FullStackLab11.model.User;
+import com.example.FullStackLab11.dao.UserDB;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface UserRepository extends CrudRepository<User, Long> {
-    List<User> findByRole(String role);
-    List<User> findByRoleNot(String role);
+@Repository
+public interface UserRepository extends CrudRepository<UserDB, Long> {
+    List<UserDB> findByRole(String role);
+    List<UserDB> findByRoleNot(String role);
 }

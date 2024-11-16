@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 import com.example.FullStackLab11.Services.EntryService;
 import com.example.FullStackLab11.Services.UserService;
+import com.example.FullStackLab11.dao.EntryDAO;
+import com.example.FullStackLab11.dao.UserDAO;
+import com.example.FullStackLab11.dao.UserDB;
 import com.example.FullStackLab11.model.JournalEntry;
 import com.example.FullStackLab11.model.Patient;
 import com.example.FullStackLab11.model.User;
@@ -31,14 +34,14 @@ public class PatientController {
     @RequestMapping(value = "/patients", method = RequestMethod.GET,
             produces = "application/json")
     public List<User> getAllPatients() {
-        return userService.getAllPatients();
+        return UserDAO.FromDBtoBO(userService.getAllPatients());
     }
 
     // GET all who are not patients
     @RequestMapping(value = "/staff", method = RequestMethod.GET,
             produces = "application/json")
     public List<User> getAllStaff() {
-        return userService.getAllStaff();
+        return UserDAO.FromDBtoBO(userService.getAllStaff());
     }
 
     // GET a patient
@@ -59,11 +62,11 @@ public class PatientController {
                 .findFirst()
                 .orElse(null);
     }
-    // GET an entry
-    @RequestMapping(value = "/entry/{id}", method = RequestMethod.GET,
+    // GET entries from a patient
+    @RequestMapping(value = "/entries/{id}", method = RequestMethod.GET,
             produces = "application/json")
     public List<JournalEntry> getAllEntries(@PathVariable("id") long id) {
-        entries = entryService.getAllEntries();
+        entries = EntryDAO.FromDBtoBO(entryService.getAllEntries());
         return entries.stream()
                 .filter(entry -> entry.getPatientId() == id)
                 .collect(Collectors.toList());
@@ -82,13 +85,13 @@ public class PatientController {
     // POST
     @RequestMapping(value = "/patients", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<User> createPatient(@RequestBody User newUser) {
-        userService.saveUser(newUser);
+        userService.saveUser(UserDAO.FromBOtoDB(newUser));
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
     // POST
     @RequestMapping(value = "/entry", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<JournalEntry> createPatient(@RequestBody JournalEntry newEntry) {
-        entryService.saveEntry(newEntry);
+        entryService.saveEntry(EntryDAO.FromBOtoDB(newEntry));
         return ResponseEntity.status(HttpStatus.CREATED).body(newEntry);
     }
 
@@ -99,7 +102,7 @@ public class PatientController {
     @RequestMapping(value = "/patients/{id}", method = RequestMethod.PUT, consumes = "application/json")
     public ResponseEntity<User> updatePatient(@PathVariable long id, @RequestBody User updatedPatient) {
         System.out.println("updatePatient initiated");
-        User updatedUser = userService.updateUser(id, updatedPatient);
+        User updatedUser = UserDAO.FromDBtoBO(userService.updateUser(id, UserDAO.FromBOtoDB(updatedPatient)));
 
         // Check if update was successful
         if (updatedUser != null) {
