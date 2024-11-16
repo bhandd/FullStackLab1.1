@@ -4,6 +4,7 @@ import com.example.FullStackLab11.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDAO {
     public static User FromDBtoBO(UserDB userDB) {

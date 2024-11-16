@@ -1,6 +1,7 @@
 package com.example.FullStackLab11.controller;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.example.FullStackLab11.Services.EntryService;
@@ -63,6 +64,12 @@ public class PatientController {
                 .orElse(null);
     }
     // GET entries from a patient
+    @RequestMapping(value = "/entries", method = RequestMethod.GET,
+            produces = "application/json")
+    public List<JournalEntry> getAllEntries() {
+        return EntryDAO.FromDBtoBO(entryService.getAllEntries());
+    }
+    // GET entries from a patient
     @RequestMapping(value = "/entries/{id}", method = RequestMethod.GET,
             produces = "application/json")
     public List<JournalEntry> getAllEntries(@PathVariable("id") long id) {
@@ -88,8 +95,8 @@ public class PatientController {
         userService.saveUser(UserDAO.FromBOtoDB(newUser));
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
-    // POST
-    @RequestMapping(value = "/entry", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    // POST an entry
+    @RequestMapping(value = "/entries", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<JournalEntry> createPatient(@RequestBody JournalEntry newEntry) {
         entryService.saveEntry(EntryDAO.FromBOtoDB(newEntry));
         return ResponseEntity.status(HttpStatus.CREATED).body(newEntry);
