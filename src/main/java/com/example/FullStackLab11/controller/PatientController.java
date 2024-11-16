@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.FullStackLab11.Services.EntryService;
+import com.example.FullStackLab11.Services.MessageService;
 import com.example.FullStackLab11.Services.UserService;
 import com.example.FullStackLab11.dao.EntryDAO;
 import com.example.FullStackLab11.dao.UserDAO;
 import com.example.FullStackLab11.dao.UserDB;
 import com.example.FullStackLab11.model.JournalEntry;
+import com.example.FullStackLab11.model.Message;
 import com.example.FullStackLab11.model.Patient;
 import com.example.FullStackLab11.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +26,14 @@ public class PatientController {
 
     private List<User> users = new ArrayList<User>();
     private List<JournalEntry> entries = new ArrayList<JournalEntry>();
+    private List<Message> messages = new ArrayList<>();
 
     @Autowired
     private UserService userService;
     @Autowired
     private EntryService entryService;
+    @Autowired
+    private MessageService messageService;
 
     // GET patients
     @RequestMapping(value = "/patients", method = RequestMethod.GET,
