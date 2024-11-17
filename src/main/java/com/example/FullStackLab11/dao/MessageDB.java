@@ -7,9 +7,9 @@ public class MessageDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "patientId")
+    @Column(name = "senderId")
     private long senderId;
-    @Column(name = "staffId")
+    @Column(name = "recieverId")
     private long recieverId;
     @Column(name = "message")
     private String message;

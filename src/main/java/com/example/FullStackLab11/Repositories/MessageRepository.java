@@ -8,5 +8,5 @@ import java.util.List;
 public interface MessageRepository extends CrudRepository<MessageDB, Long> {
     List<MessageDB> findAllBySenderId(Long senderId);
 
-    List<MessageDB> findAllByReceiverId(Long receiverId);
+    List<MessageDB> findAllByRecieverId(Long receiverId);
 }

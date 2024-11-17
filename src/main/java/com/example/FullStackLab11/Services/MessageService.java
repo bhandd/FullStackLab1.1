@@ -28,7 +28,7 @@ public class MessageService {
         return messageRepository.findAllBySenderId(id);
     }
 
-    public List<MessageDB> findAllByReceiverId(Long id) {
-        return messageRepository.findAllByReceiverId(id);
+    public List<MessageDB> findAllByRecieverId(Long id) {
+        return messageRepository.findAllByRecieverId(id);
     }
 }

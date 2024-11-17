@@ -7,6 +7,7 @@ import com.example.FullStackLab11.Services.EntryService;
 import com.example.FullStackLab11.Services.MessageService;
 import com.example.FullStackLab11.Services.UserService;
 import com.example.FullStackLab11.dao.EntryDAO;
+import com.example.FullStackLab11.dao.MessageDAO;
 import com.example.FullStackLab11.dao.UserDAO;
 import com.example.FullStackLab11.dao.UserDB;
 import com.example.FullStackLab11.model.JournalEntry;
@@ -98,6 +99,12 @@ public class PatientController {
     public ResponseEntity<JournalEntry> createPatient(@RequestBody JournalEntry newEntry) {
         entryService.saveEntry(EntryDAO.FromBOtoDB(newEntry));
         return ResponseEntity.status(HttpStatus.CREATED).body(newEntry);
+    }
+    // POST
+    @RequestMapping(value = "/messages", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Message> createPatient(@RequestBody Message newMessage) {
+        messageService.saveMessage(MessageDAO.FromBOtoDB(newMessage));
+        return ResponseEntity.status(HttpStatus.CREATED).body(newMessage);
     }
 
     //TODO: testa denna i webbläsaren me en js request
