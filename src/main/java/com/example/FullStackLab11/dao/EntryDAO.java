@@ -14,7 +14,7 @@ public class EntryDAO {
                 journalEntryDB.getEntry(),
                 journalEntryDB.getStartDate(),
                 journalEntryDB.getEndDate(),
-                journalEntryDB.gethealthStatus());
+                journalEntryDB.getCondition());
     }
 
     public static List<JournalEntry> FromDBtoBO(List<JournalEntryDB> journalEntryDB) {
@@ -32,7 +32,7 @@ public class EntryDAO {
                 journalEntry.getEntry(),
                 journalEntry.getStartDate(),
                 journalEntry.getEndDate(),
-                journalEntry.gethealthStatus());
+                journalEntry.getCondition());
     }
 
     public static List<JournalEntryDB> FromBOtoDB(List<JournalEntry> entries) {
