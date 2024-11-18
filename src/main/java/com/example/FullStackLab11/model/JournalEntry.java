@@ -1,7 +1,5 @@
 package com.example.FullStackLab11.model;
 
-import jakarta.persistence.*;
-
 import java.util.Date;
 
 public class JournalEntry {
@@ -11,10 +9,10 @@ public class JournalEntry {
     private String entry;
     private Date startDate;
     private Date endDate;
-    private Condition condition;
+    private HealthStatus condition;
     private Journal journal;
 
-    public JournalEntry(long id, long patientId, String entry, Date startDate, Date endDate, Condition condition) {
+    public JournalEntry(long id, long patientId, String entry, Date startDate, Date endDate, HealthStatus condition) {
         this.id = id;
         this.patientId = patientId;
         this.entry = entry;
@@ -67,11 +65,11 @@ public class JournalEntry {
         this.endDate = endDate;
     }
 
-    public Condition getCondition() {
+    public HealthStatus getCondition() {
         return condition;
     }
 
-    public void setCondition(Condition condition) {
+    public void setCondition(HealthStatus condition) {
         this.condition = condition;
     }
 

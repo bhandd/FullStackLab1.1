@@ -1,6 +1,6 @@
 package com.example.FullStackLab11.model;
 
-public enum Condition {
+public enum HealthStatus {
 
     WELL, COLD, PAIN, BROKEN_BONE, UNKNOWN
 }

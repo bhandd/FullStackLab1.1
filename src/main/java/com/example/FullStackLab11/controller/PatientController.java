@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.FullStackLab11.Services.EntryService;
+import com.example.FullStackLab11.Services.MessageService;
 import com.example.FullStackLab11.Services.UserService;
 import com.example.FullStackLab11.dao.EntryDAO;
+import com.example.FullStackLab11.dao.MessageDAO;
 import com.example.FullStackLab11.dao.UserDAO;
 import com.example.FullStackLab11.dao.UserDB;
 import com.example.FullStackLab11.model.JournalEntry;
+import com.example.FullStackLab11.model.Message;
 import com.example.FullStackLab11.model.Patient;
 import com.example.FullStackLab11.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +27,14 @@ public class PatientController {
 
     private List<User> users = new ArrayList<User>();
     private List<JournalEntry> entries = new ArrayList<JournalEntry>();
+    private List<Message> messages = new ArrayList<>();
 
     @Autowired
     private UserService userService;
     @Autowired
     private EntryService entryService;
+    @Autowired
+    private MessageService messageService;
 
     // GET patients
     @RequestMapping(value = "/patients", method = RequestMethod.GET,
@@ -63,6 +69,12 @@ public class PatientController {
                 .orElse(null);
     }
     // GET entries from a patient
+    @RequestMapping(value = "/entries", method = RequestMethod.GET,
+            produces = "application/json")
+    public List<JournalEntry> getAllEntries() {
+        return EntryDAO.FromDBtoBO(entryService.getAllEntries());
+    }
+    // GET an entry
     @RequestMapping(value = "/entries/{id}", method = RequestMethod.GET,
             produces = "application/json")
     public List<JournalEntry> getAllEntries(@PathVariable("id") long id) {
@@ -89,10 +101,16 @@ public class PatientController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
     // POST
-    @RequestMapping(value = "/entry", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    @RequestMapping(value = "/entries", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<JournalEntry> createPatient(@RequestBody JournalEntry newEntry) {
         entryService.saveEntry(EntryDAO.FromBOtoDB(newEntry));
         return ResponseEntity.status(HttpStatus.CREATED).body(newEntry);
+    }
+    // POST
+    @RequestMapping(value = "/messages", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Message> createPatient(@RequestBody Message newMessage) {
+        messageService.saveMessage(MessageDAO.FromBOtoDB(newMessage));
+        return ResponseEntity.status(HttpStatus.CREATED).body(newMessage);
     }
 
     //TODO: testa denna i webbläsaren me en js request
