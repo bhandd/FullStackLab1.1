@@ -1,20 +1,10 @@
 package com.example.FullStackLab11.controller;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.example.FullStackLab11.Services.UserService;
 import com.example.FullStackLab11.dao.UserDAO;
 
-import com.example.FullStackLab11.Services.EntryService;
-//import com.example.FullStackLab11.Services.MessageService;
-import com.example.FullStackLab11.Services.UserService;
-import com.example.FullStackLab11.dao.EntryDAO;
-//import com.example.FullStackLab11.dao.MessageDAO;
-import com.example.FullStackLab11.dao.UserDAO;
-import com.example.FullStackLab11.dao.UserDB;
-import com.example.FullStackLab11.model.JournalEntry;
-//import com.example.FullStackLab11.model.Message;
 import com.example.FullStackLab11.model.Patient;
 import com.example.FullStackLab11.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-//@RequestMapping("/patients")
 public class PatientController {
 
     private List<User> users = new ArrayList<User>();
@@ -47,23 +35,11 @@ public class PatientController {
         return UserDAO.FromDBtoBO(userService.getAllStaff());
     }
 
-    // GET a patient
-    @RequestMapping(value = "/patients/{id}", method = RequestMethod.GET,
+    // GET a patient or non-patient
+    @RequestMapping(value = {"/patients/{id}", "/staff/{id}"}, method = RequestMethod.GET,
             produces = "application/json")
-    public User getPatientById(@PathVariable("id") long id) {
-        return users.stream()
-                .filter(user -> user.getId() == id)
-                .findFirst()
-                .orElse(null);
-    }
-    // GET a non patient
-    @RequestMapping(value = "/staff/{id}", method = RequestMethod.GET,
-            produces = "application/json")
-    public User getStaffById(@PathVariable("id") long id) {
-        return users.stream()
-                .filter(user -> user.getId() == id)
-                .findFirst()
-                .orElse(null);
+    public User getUserById(@PathVariable("id") long id) {
+        return UserDAO.FromDBtoBO(userService.getUserById(id));
     }
 
     // DELETE

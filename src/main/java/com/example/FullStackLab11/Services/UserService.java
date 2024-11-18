@@ -14,26 +14,29 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // Create
+    // POST
     public UserDB saveUser(UserDB user) {
         return userRepository.save(user);
     }
 
-    // Read
+    // READ
     public List<UserDB> getAllUsers() {
         return (List<UserDB>) userRepository.findAll();
     }
 
+    // READ
     public List<UserDB> getAllPatients() {
         return userRepository.findByRole("patient");
     }
 
+    // READ
     public List<UserDB> getAllStaff() {
         return userRepository.findByRoleNot("patient");
     }
 
-    public Optional<UserDB> getUserById(Long id) {
-        return userRepository.findById(id);
+    // READ
+    public UserDB getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     public boolean existsById(Long id) {
@@ -41,7 +44,7 @@ public class UserService {
         return u.isPresent();
     }
 
-    // Update
+    // PUT
     public UserDB updateUser(Long id, UserDB updatedUser) {
         return userRepository.findById(id).map(user -> {
             user.setName(updatedUser.getName());
@@ -49,7 +52,7 @@ public class UserService {
         }).orElseThrow(() -> new RuntimeException("Doctor not found with id " + id));
     }
 
-    // Delete
+    // DELETE
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }

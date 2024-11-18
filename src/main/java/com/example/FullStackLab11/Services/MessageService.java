@@ -6,19 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
-    // Create
+    // POST
     public MessageDB saveMessage(MessageDB message) {
         return messageRepository.save(message);
     }
 
-    // ReadD
+    // READ
     public List<MessageDB> getAllMessages() {
         return (List<MessageDB>) messageRepository.findAll();
     }
@@ -26,10 +25,12 @@ public class MessageService {
         return messageRepository.findById(id).orElse(null);
     }
 
+    // READ
     public List<MessageDB> findAllMessagesBySenderId(Long id) {
         return messageRepository.findAllBySenderId(id);
     }
 
+    // READ
     public List<MessageDB> findAllMessagesByRecieverId(Long id) {
         return messageRepository.findAllByRecieverId(id);
     }
