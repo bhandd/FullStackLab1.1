@@ -3,6 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.example.FullStackLab11.Services.UserService;
+import com.example.FullStackLab11.dao.UserDAO;
+
 import com.example.FullStackLab11.Services.EntryService;
 //import com.example.FullStackLab11.Services.MessageService;
 import com.example.FullStackLab11.Services.UserService;
@@ -26,15 +29,9 @@ import org.springframework.web.bind.annotation.*;
 public class PatientController {
 
     private List<User> users = new ArrayList<User>();
-    private List<JournalEntry> entries = new ArrayList<JournalEntry>();
-   // private List<Message> messages = new ArrayList<>();
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private EntryService entryService;
-//    @Autowired
-//    private MessageService messageService;
 
     // GET patients
     @RequestMapping(value = "/patients", method = RequestMethod.GET,
@@ -68,21 +65,6 @@ public class PatientController {
                 .findFirst()
                 .orElse(null);
     }
-    // GET entries from a patient
-    @RequestMapping(value = "/entries", method = RequestMethod.GET,
-            produces = "application/json")
-    public List<JournalEntry> getAllEntries() {
-        return EntryDAO.FromDBtoBO(entryService.getAllEntries());
-    }
-    // GET an entry
-    @RequestMapping(value = "/entries/{id}", method = RequestMethod.GET,
-            produces = "application/json")
-    public List<JournalEntry> getAllEntries(@PathVariable("id") long id) {
-        entries = EntryDAO.FromDBtoBO(entryService.getAllEntries());
-        return entries.stream()
-                .filter(entry -> entry.getPatientId() == id)
-                .collect(Collectors.toList());
-    }
 
     // DELETE
     @RequestMapping (value = "/patients/{id}", method = RequestMethod.DELETE, produces = "application/json")
@@ -100,18 +82,7 @@ public class PatientController {
         userService.saveUser(UserDAO.FromBOtoDB(newUser));
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
-    // POST
-    @RequestMapping(value = "/entries", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<JournalEntry> createPatient(@RequestBody JournalEntry newEntry) {
-        entryService.saveEntry(EntryDAO.FromBOtoDB(newEntry));
-        return ResponseEntity.status(HttpStatus.CREATED).body(newEntry);
-    }
-    // POST
-//    @RequestMapping(value = "/messages", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-//    public ResponseEntity<Message> createPatient(@RequestBody Message newMessage) {
-//        messageService.saveMessage(MessageDAO.FromBOtoDB(newMessage));
-//        return ResponseEntity.status(HttpStatus.CREATED).body(newMessage);
-//    }
+
 
     //TODO: testa denna i webbläsaren me en js request
     /**
@@ -129,8 +100,6 @@ public class PatientController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 if user not found
         }
     }
-
-
 
     /**
      * Returnerar denna lista
@@ -160,10 +129,6 @@ public class PatientController {
         return tempPatients;
 
     }
-
-
-
-
 
 //    private Patient getPatientById(long id) {
 //

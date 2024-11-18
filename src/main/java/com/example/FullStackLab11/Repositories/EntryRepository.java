@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface EntryRepository extends CrudRepository<JournalEntryDB, Long> {
-
+    List<JournalEntryDB> getEntriesByPatientId(long patientId);
 }
