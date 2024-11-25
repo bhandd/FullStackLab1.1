@@ -13,7 +13,16 @@ public class UserDB {
     private long social_number;
     @Column(name = "role")
     private String role;
+    @Column(name = "password")
+    private String password;
 
+    public UserDB(long id, String name, long social_number, String role, String password) {
+        this.id = id;
+        this.name = name;
+        this.social_number = social_number;
+        this.role = role;
+        this.password = password;
+    }
     public UserDB(long id, String name, long social_number, String role) {
         this.id = id;
         this.name = name;
@@ -55,5 +64,12 @@ public class UserDB {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

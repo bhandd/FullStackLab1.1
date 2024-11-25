@@ -10,4 +10,5 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<UserDB, Long> {
     List<UserDB> findByRole(String role);
     List<UserDB> findByRoleNot(String role);
+    UserDB findByNameAndPassword(String name, String password);
 }

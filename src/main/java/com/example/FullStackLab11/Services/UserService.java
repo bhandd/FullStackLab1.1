@@ -2,6 +2,7 @@ package com.example.FullStackLab11.Services;
 
 import com.example.FullStackLab11.Repositories.UserRepository;
 import com.example.FullStackLab11.dao.UserDB;
+import com.example.FullStackLab11.model.Credentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,10 @@ public class UserService {
     // READ
     public UserDB getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    public UserDB validateUser(Credentials credentials) {
+        return userRepository.findByNameAndPassword(credentials.getUsername(), credentials.getPassword());
     }
 
     public boolean existsById(Long id) {

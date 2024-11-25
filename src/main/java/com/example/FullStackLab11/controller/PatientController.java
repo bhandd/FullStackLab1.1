@@ -1,11 +1,12 @@
 package com.example.FullStackLab11.controller;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import com.example.FullStackLab11.Services.UserService;
 import com.example.FullStackLab11.dao.UserDAO;
 
-import com.example.FullStackLab11.model.Patient;
+import com.example.FullStackLab11.model.Credentials;
 import com.example.FullStackLab11.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class PatientController {
-
-    private List<User> users = new ArrayList<User>();
 
     @Autowired
     private UserService userService;
@@ -69,7 +68,6 @@ public class PatientController {
         System.out.println("updatePatient initiated");
         User updatedUser = UserDAO.FromDBtoBO(userService.updateUser(id, UserDAO.FromBOtoDB(updatedPatient)));
 
-        // Check if update was successful
         if (updatedUser != null) {
             return ResponseEntity.ok(updatedUser); // Return the updated user
         } else {
@@ -77,10 +75,26 @@ public class PatientController {
         }
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<Credentials> validateUser (@RequestBody Credentials credentials) {
+        if (Objects.equals(credentials.getUsername(), "admin") && Objects.equals(credentials.getPassword(), "admin")) {
+            return ResponseEntity.ok(new Credentials("ADMIN", "Admin"));
+        }
+        User user = UserDAO.FromDBtoBO(userService.validateUser(credentials));
+
+        if (user != null) {
+            return ResponseEntity.ok(new Credentials(user.getName(), credentials.getPassword()));
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+    }
+
+
+
+
     /**
      * Returnerar denna lista
      * */
-    private static List<Patient> createList() {
+    /*private static List<Patient> createList() {
         List<Patient> tempPatients = new ArrayList<>();
 
         Patient emp1 = new Patient();
@@ -104,7 +118,7 @@ public class PatientController {
 
         return tempPatients;
 
-    }
+    }*/
 
 //    private Patient getPatientById(long id) {
 //
