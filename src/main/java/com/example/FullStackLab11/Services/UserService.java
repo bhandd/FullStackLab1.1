@@ -2,6 +2,8 @@ package com.example.FullStackLab11.Services;
 
 import com.example.FullStackLab11.Repositories.UserRepository;
 import com.example.FullStackLab11.dao.UserDB;
+import com.example.FullStackLab11.model.LoginForm;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +17,8 @@ public class UserService {
     private UserRepository userRepository;
 
     // POST
-    public UserDB saveUser(UserDB user) {
-        return userRepository.save(user);
+    public void saveUser(UserDB user) {
+        userRepository.save(user);
     }
 
     // READ
@@ -37,6 +39,24 @@ public class UserService {
     // READ
     public UserDB getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    public UserDB validateNewUser(LoginForm credentials) {
+        return userRepository.findByNameAndPassword(credentials.getUsername(), credentials.getPassword());
+    }
+
+    @Transactional
+    public UserDB registerNewUser(UserDB userDB) {
+        if (userDB == null) {
+            throw new IllegalArgumentException("Invalid user data");
+        }
+        if (userDB.getName() == null) {
+            throw new IllegalArgumentException("Invalid username data");
+        }
+        if (userDB.getPassword() == null) {
+            throw new IllegalArgumentException("Invalid userpassword data");
+        }
+        return userRepository.save(userDB);
     }
 
     public boolean existsById(Long id) {
