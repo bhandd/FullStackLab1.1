@@ -1,10 +1,10 @@
 package com.example.FullStackLab11.model;
 
-public class Credentials {
+public class LoginForm {
     private String username;
     private String password;
 
-    public Credentials(String username, String password) {
+    public LoginForm(String username, String password) {
         this.username = username;
         this.password = password;
     }

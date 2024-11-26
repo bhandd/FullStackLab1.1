@@ -1,12 +1,13 @@
 package com.example.FullStackLab11.controller;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import com.example.FullStackLab11.Services.UserService;
 import com.example.FullStackLab11.dao.UserDAO;
 
-import com.example.FullStackLab11.model.Credentials;
+import com.example.FullStackLab11.dao.UserDB;
+import com.example.FullStackLab11.model.LoginForm;
+import com.example.FullStackLab11.model.RegisterForm;
 import com.example.FullStackLab11.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -76,18 +77,23 @@ public class PatientController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<Credentials> validateUser (@RequestBody Credentials credentials) {
+    public ResponseEntity<LoginForm> validateUser (@RequestBody LoginForm credentials) {
         if (Objects.equals(credentials.getUsername(), "admin") && Objects.equals(credentials.getPassword(), "admin")) {
-            return ResponseEntity.ok(new Credentials("ADMIN", "Admin"));
+            return ResponseEntity.ok(new LoginForm("ADMIN", "Admin"));
         }
         User user = UserDAO.FromDBtoBO(userService.validateUser(credentials));
 
         if (user != null) {
-            return ResponseEntity.ok(new Credentials(user.getName(), credentials.getPassword()));
+            return ResponseEntity.ok(new LoginForm(user.getName(), credentials.getPassword()));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
 
+    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = "application/json")
+    public void saveUser (@RequestBody RegisterForm form) {
+        UserDB userDB = new UserDB(form.getUsername(), form.getSocial_number(), form.getRole(), form.getPassword(), form.getEmail());
+        userService.saveUser(userDB);
+    }
 
 
 

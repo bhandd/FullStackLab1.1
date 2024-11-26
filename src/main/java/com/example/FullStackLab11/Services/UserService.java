@@ -2,7 +2,7 @@ package com.example.FullStackLab11.Services;
 
 import com.example.FullStackLab11.Repositories.UserRepository;
 import com.example.FullStackLab11.dao.UserDB;
-import com.example.FullStackLab11.model.Credentials;
+import com.example.FullStackLab11.model.LoginForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +16,8 @@ public class UserService {
     private UserRepository userRepository;
 
     // POST
-    public UserDB saveUser(UserDB user) {
-        return userRepository.save(user);
+    public void saveUser(UserDB user) {
+        userRepository.save(user);
     }
 
     // READ
@@ -40,7 +40,7 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public UserDB validateUser(Credentials credentials) {
+    public UserDB validateUser(LoginForm credentials) {
         return userRepository.findByNameAndPassword(credentials.getUsername(), credentials.getPassword());
     }
 
