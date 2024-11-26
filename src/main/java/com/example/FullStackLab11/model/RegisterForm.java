@@ -1,47 +1,56 @@
 package com.example.FullStackLab11.model;
 
 public class RegisterForm {
-    private String username;
-    private String password;
-    private String email;
-    private long social_number;
-    private int role;
+    private String registerUserName;
+    private String registerPassword;
+    private String registerEmail;
+    private long registerSocialNumber;
+    private String registerRole;
 
-    public RegisterForm(String username, String password, String email, long social_number, int role) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.social_number = social_number;
-        this.role = role;
+    public RegisterForm(String username, String password, String email, long social_number, String role) {
+        this.registerUserName = username;
+        this.registerPassword = password;
+        this.registerEmail = email;
+        this.registerSocialNumber = social_number;
+        this.registerRole = role;
     }
+    public RegisterForm() {
+
+    }
+
     public String getUsername() {
-        return username;
+        return registerUserName;
     }
     public void setUsername(String username) {
-        this.username = username;
+        this.registerUserName = username;
     }
     public String getPassword() {
-        return password;
+        return registerPassword;
     }
     public void setPassword(String password) {
-        this.password = password;
+        this.registerPassword = password;
     }
     public String getEmail() {
-        return email;
+        return registerEmail;
     }
     public void setEmail(String email) {
-        this.email = email;
+        this.registerEmail = email;
     }
     public long getSocial_number() {
-        return social_number;
+        return registerSocialNumber;
     }
     public void setSocial_number(long social_number) {
-        this.social_number = social_number;
+        this.registerSocialNumber = social_number;
     }
-    public int getRole() {
-        return role;
+    public String getRole() {
+        return registerRole;
     }
-    public void setRole(int role) {
-        this.role = role;
+    public void setRole(String role) {
+        this.registerRole = role;
+    }
+
+    @Override
+    public String toString() {
+        return registerUserName + ", " + registerPassword + ", " + registerEmail + ", " + registerSocialNumber + ", " + registerRole;
     }
 }

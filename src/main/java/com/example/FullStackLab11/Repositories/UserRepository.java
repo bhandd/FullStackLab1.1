@@ -1,6 +1,7 @@
 package com.example.FullStackLab11.Repositories;
 
 import com.example.FullStackLab11.dao.UserDB;
+import com.example.FullStackLab11.model.LoginForm;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

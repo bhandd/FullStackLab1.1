@@ -12,26 +12,26 @@ public class UserDB {
     @Column(name = "social_number")
     private long social_number;
     @Column(name = "role")
-    private int role;
+    private String role;
     @Column(name = "password")
     private String password;
     @Column(name = "email")
     private String email;
 
-    public UserDB(long id, String name, long social_number, int role, String password) {
+    public UserDB(long id, String name, long social_number, String role, String password) {
         this.id = id;
         this.name = name;
         this.social_number = social_number;
         this.role = role;
         this.password = password;
     }
-    public UserDB(long id, String name, long social_number, int role) {
+    public UserDB(long id, String name, long social_number, String role) {
         this.id = id;
         this.name = name;
         this.social_number = social_number;
         this.role = role;
     }
-    public UserDB(String name, long social_number, int role, String password, String email) {
+    public UserDB(String name, long social_number, String role, String password, String email) {
         this.name = name;
         this.social_number = social_number;
         this.role = role;
@@ -67,11 +67,11 @@ public class UserDB {
         this.social_number = social_number;
     }
 
-    public int getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

@@ -5,10 +5,10 @@ public class User {
     private long id;
     private String name;
     private long social_number;
-    private int role;
+    private String role;
 
 
-    public User(long id, String name, long social_number, int role) {
+    public User(long id, String name, long social_number, String role) {
         this.id = id;
         this.name = name;
         this.social_number = social_number;
@@ -43,11 +43,11 @@ public class User {
         this.social_number = social_number;
     }
 
-    public int getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(int role) {
+    public void setRole(String role) {
         this.role = role;
     }
 }

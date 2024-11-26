@@ -78,21 +78,24 @@ public class PatientController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<LoginForm> validateUser (@RequestBody LoginForm credentials) {
+        System.out.println(credentials.getUsername() + ", " + credentials.getPassword());
         if (Objects.equals(credentials.getUsername(), "admin") && Objects.equals(credentials.getPassword(), "admin")) {
             return ResponseEntity.ok(new LoginForm("ADMIN", "Admin"));
         }
-        User user = UserDAO.FromDBtoBO(userService.validateUser(credentials));
+        User user = UserDAO.FromDBtoBO(userService.validateNewUser(credentials));
 
         if (user != null) {
-            return ResponseEntity.ok(new LoginForm(user.getName(), credentials.getPassword()));
+            return ResponseEntity.ok(new LoginForm(credentials.getUsername(), credentials.getPassword()));
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = "application/json")
-    public void saveUser (@RequestBody RegisterForm form) {
+    public ResponseEntity<LoginForm> registerNewUser (@RequestBody RegisterForm form) {
+        System.out.println(form.toString());
         UserDB userDB = new UserDB(form.getUsername(), form.getSocial_number(), form.getRole(), form.getPassword(), form.getEmail());
-        userService.saveUser(userDB);
+        userService.registerNewUser(userDB);
+        return ResponseEntity.ok(new LoginForm(form.getUsername(), form.getPassword()));
     }
 
 
